@@ -16,31 +16,12 @@ def login():
         if conn:
             try:
                 cursor = conn.cursor()
-                resultado = None
                 
-                # OPCIÓN 1: Ruta completa en Clever Cloud con mayúsculas (Empleados)
-                try:
-                    query = "SELECT * FROM `bx4sb42e5pzf9fyyiznh`.`Empleados` WHERE Usuario = %s AND Contra = %s"
-                    cursor.execute(query, (usuario, contra))
-                    resultado = cursor.fetchone()
-                except Exception:
-                    # OPCIÓN 2: Ruta completa con columnas en minúsculas
-                    try:
-                        query = "SELECT * FROM `bx4sb42e5pzf9fyyiznh`.`Empleados` WHERE usuario = %s AND contra = %s"
-                        cursor.execute(query, (usuario, contra))
-                        resultado = cursor.fetchone()
-                    except Exception:
-                        pass
+                # Consulta directa usando los nombres de tus columnas con mayúsculas exactas
+                query = "SELECT * FROM `bx4sb42e5pzf9fyyiznh`.`Empleados` WHERE `Usuario` = %s AND `Contra` = %s"
+                cursor.execute(query, (usuario.strip(), contra.strip()))
+                resultado = cursor.fetchone()
                 
-                # OPCIÓN 3: Por si acaso en el servidor quedó en singular (Empleado)
-                if not resultado:
-                    try:
-                        query = "SELECT * FROM `bx4sb42e5pzf9fyyiznh`.`Empleado` WHERE usuario = %s AND contra = %s"
-                        cursor.execute(query, (usuario, contra))
-                        resultado = cursor.fetchone()
-                    except Exception:
-                        pass
-
                 cursor.close()
                 conn.close()
                 
