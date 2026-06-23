@@ -17,10 +17,16 @@ def login():
             try:
                 cursor = conn.cursor()
                 
-                # Ajustado a minúsculas tanto para la tabla como para las columnas
-                query = "SELECT * FROM empleado WHERE usuario = %s AND contra = %s"
-                cursor.execute(query, (usuario, contra))
-                resultado = cursor.fetchone()
+                # PROBAMOS PRIMERO: Con mayúsculas en las columnas (Estándar de la guía)
+                try:
+                    query = "SELECT * FROM Empleados WHERE Usuario = %s AND Contra = %s"
+                    cursor.execute(query, (usuario, contra))
+                    resultado = cursor.fetchone()
+                except Exception:
+                    # PROBAMOS SEGUNDO: Si falla por las columnas, intentamos con minúsculas
+                    query = "SELECT * FROM Empleados WHERE usuario = %s AND contra = %s"
+                    cursor.execute(query, (usuario, contra))
+                    resultado = cursor.fetchone()
                 
                 cursor.close()
                 conn.close()
@@ -33,7 +39,6 @@ def login():
                 else:
                     st.error("Usuario o contraseña incorrectos.")
             except Exception as e:
-                # Si sigue fallando, te mostrará el error técnico real de MySQL en pantalla para saber el nombre exacto
-                st.error(f"Error técnico de MySQL: {e}")
+                st.error(f"Error en la estructura de la tabla 'Empleados': {e}")
         else:
             st.error("Error al conectar con la base de datos.")
