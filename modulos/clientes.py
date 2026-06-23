@@ -17,10 +17,9 @@ def mostrar_clientes():
                 conn = obtener_conexion()
                 if conn:
                     cursor = conn.cursor()
-                    # Inserta los datos capturados en la tabla 'Clientes' de Clever Cloud
                     query = "INSERT INTO Clientes (Nombre, Direccion, Telefono) VALUES (%s, %s, %s)"
                     cursor.execute(query, (nombre, direccion, telefono))
-                    conn.commit()  # Confirma la inserción
+                    conn.commit()
                     cursor.close()
                     conn.close()
                     st.success(f"¡El cliente '{nombre}' se registró con éxito!")
@@ -41,7 +40,6 @@ def mostrar_clientes():
         conn.close()
         
         if datos:
-            # Dibuja la tabla interactiva
             st.dataframe(datos, column_config={i: col for i, col in enumerate(columnas)}, use_container_width=True)
         else:
             st.info("Aún no hay clientes registrados en la base de datos.")
