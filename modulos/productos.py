@@ -16,10 +16,9 @@ def mostrar_productos():
                 conn = obtener_conexion()
                 if conn:
                     cursor = conn.cursor()
-                    # Inserta los datos en la tabla 'Productos'
                     query = "INSERT INTO Productos (Nombre_Producto, Precio) VALUES (%s, %s)"
                     cursor.execute(query, (nombre_prod, precio))
-                    conn.commit()  # Guarda los cambios en la nube
+                    conn.commit()
                     cursor.close()
                     conn.close()
                     st.success(f"¡El producto '{nombre_prod}' se guardó con éxito!")
