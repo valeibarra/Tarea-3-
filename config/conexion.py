@@ -6,6 +6,7 @@ def obtener_conexion():
         conexion = mysql.connector.connect(
             host="bx4sb42e5pzf9fyyiznh-mysql.services.clever-cloud.com",
             user="u6ur63bxmknb68m8",
+            # 👇 BORRA ESTO DE ABAJO Y PEGA TU CONTRASEÑA REAL DE CLEVER CLOUD EN MEDIO DE LAS COMILLAS
             password="QDtu4BXTVTnlmFcqkBAt",
             database="bx4sb42e5pzf9fyyiznh",
             port="3306"
