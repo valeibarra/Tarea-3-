@@ -17,9 +17,8 @@ def login():
             try:
                 cursor = conn.cursor()
                 
-                # Modificado a 'empleado' (en minúscula y singular) según tu phpMyAdmin
-                # Se asume que las columnas dentro se llaman 'Usuario' y 'Contra'
-                query = "SELECT * FROM empleado WHERE Usuario = %s AND Contra = %s"
+                # Ajustado a minúsculas tanto para la tabla como para las columnas
+                query = "SELECT * FROM empleado WHERE usuario = %s AND contra = %s"
                 cursor.execute(query, (usuario, contra))
                 resultado = cursor.fetchone()
                 
@@ -34,7 +33,7 @@ def login():
                 else:
                     st.error("Usuario o contraseña incorrectos.")
             except Exception as e:
-                # Si las columnas se llaman diferente en tu tabla (ej: 'usuario' o 'contraseña'), aquí saltará el aviso
-                st.error("Error en la consulta SQL: Verifica si las columnas se llaman exactamente 'Usuario' y 'Contra' dentro de tu tabla 'empleado'.")
+                # Si sigue fallando, te mostrará el error técnico real de MySQL en pantalla para saber el nombre exacto
+                st.error(f"Error técnico de MySQL: {e}")
         else:
             st.error("Error al conectar con la base de datos.")
